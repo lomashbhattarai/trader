@@ -1,20 +1,23 @@
-
+import Home from '../components/Home'
+import Brokers from '../components/brokers'
+import Watchlist from '../components/watchlist'
 
 const routes = [
     {   
-        path: '/home',
+        path: '/',
+        alias:'/home',
         name:'home', 
-        component: () => import('../components/Home') 
+        component: Home 
     },
     { 
         path: '/brokers', 
         name:'brokers',
-        component: () => import('../components/brokers') 
+        component: Brokers 
     },
     { 
         path: '/watchlist', 
         name:'watchlist',
-        component: () => import('../components/watchlist') 
+        component: Watchlist 
     },
   ]
 
