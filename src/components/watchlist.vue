@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row v-if="!loaders.todaysPrice">
-      <v-col v-for="(company,index) in todaysPrice"
+      <v-col v-for="(company,index) in watchlist"
       :key="index" cols="4">
           <v-card
       
@@ -38,7 +38,9 @@
       </v-list-item>
 
       <v-card-actions>
-       <button>x</button>
+       <v-btn text icon color="pink">
+              <v-icon title="Add to watch list">mdi-heart-outline</v-icon>
+        </v-btn>
       </v-card-actions>
     </v-card>
       </v-col>
@@ -61,7 +63,7 @@
 </template>
 
 <script>
-  const axios = require('axios');
+    import {mapState} from 'vuex';
    const gradients = [
     ['#222'],
     ['#42b3f4'],
@@ -72,7 +74,7 @@
   ]
 
   export default {
-    name: 'HelloWorld',
+    name: 'Home',
 
     data: () => ({
      todaysPrice:[],
@@ -91,18 +93,11 @@
       type: 'trend',
       autoLineWidth: false,
     }),
+    computed:{
+        ...mapState(['watchlist'])
+    },
     created(){
-      this.loaders.todaysPrice = true
-      axios.get('https://g1y4zxy8vf.execute-api.us-east-2.amazonaws.com/dev/todaysPrice')
-        .then(({data})=>{
-          console.log(data.prices)
-          this.loaders.todaysPrice = false
-          this.todaysPrice = data.prices
-        })
-        .catch((err) => {
-          this.loaders.todaysPrice = false
-          alert(err)
-        })
+      
     }
   }
 </script>
