@@ -39,7 +39,7 @@
 
       <v-card-actions>
        <v-btn text icon color="pink">
-              <v-icon title="Add to watch list">mdi-heart-outline</v-icon>
+              <v-icon title="Remove from watch list">mdi-heart</v-icon>
         </v-btn>
       </v-card-actions>
     </v-card>

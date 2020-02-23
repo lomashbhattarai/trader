@@ -2,8 +2,8 @@
   <v-app>
     <v-app-bar
       app
-      color="black"
-      dark
+      color="blue"
+      
     >
       <div class="d-flex align-center">
         <router-link :to="{name:'home'}" tag="div">

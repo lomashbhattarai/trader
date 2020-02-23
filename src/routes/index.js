@@ -1,6 +1,7 @@
 import Home from '../components/Home'
 import Brokers from '../components/brokers'
 import Watchlist from '../components/watchlist'
+import SinglePage from '../components/singlePage'
 
 const routes = [
     {   
@@ -18,6 +19,11 @@ const routes = [
         path: '/watchlist', 
         name:'watchlist',
         component: Watchlist 
+    },
+    { 
+        path: '/:id/singlePage', 
+        name:'singlePage',
+        component: SinglePage 
     },
   ]
 
