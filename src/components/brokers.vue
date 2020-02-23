@@ -2,7 +2,7 @@
   <v-container>
     <v-row v-if="!loaders.brokers">
       <v-col v-for="(company,index) in brokers"
-      :key="index" cols="4">
+      :key="index" cols="12" md="4">
           <v-card
       
       class="mx-auto"
@@ -23,7 +23,7 @@
           <v-col class="overline mb-4">{{ company.name }}</v-col>  
           </v-row>
          
-          <v-list-item-title class="headline mb-1">{{ company.address }}</v-list-item-title>
+          <span class="subtitle-2"><label class="font-weight-medium overline mb-1">address: </label>{{ company.address }}</span>
           <span class="subtitle-2"><label class="font-weight-medium overline mb-1">telephone:</label> {{company.telephone }}</span>
           <span class="subtitle-2"><label class="font-weight-medium overline mb-1">email:</label> {{company.email }}</span>
           <span class="subtitle-2"><label class="font-weight-medium overline mb-1">website:</label> {{company.website }}</span>

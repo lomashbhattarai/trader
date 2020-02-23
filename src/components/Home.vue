@@ -19,7 +19,16 @@
         :items-per-page="20"
         class="elevation-1"
         @click:row="handleRowClick"
-      ></v-data-table>
+      >
+        <template v-slot:item.name="{ item }">
+          <span :class="getColor(item.difference)+'--text'">{{ item.name }}</span>
+        </template>
+        <template v-slot:item.difference="{ item }">
+          <span :class="getColor(item.difference)+'--text'">{{ item.difference }}</span>
+        </template>
+      
+      
+      </v-data-table>
         <v-card-actions>
         <v-btn text icon color="pink" @click="addToWatchlist(company)">
                 <v-icon title="Add to watch list">mdi-heart-outline</v-icon>
@@ -66,7 +75,7 @@
         })
         .catch((err) => {
           this.loaders.todaysPrice = false
-          alert(err)
+          console.log(err)
         })
     },
     methods:{
@@ -75,7 +84,13 @@
       },
       handleRowClick(value){
         this.$router.push({name:'singlePage',params:{id:value.sn}})
+      },
+      getColor(difference){
+         
+        if (difference < 0) return 'red'
+        else return 'green'
       }
+
     }
   }
 </script>
