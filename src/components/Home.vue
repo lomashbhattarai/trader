@@ -3,6 +3,10 @@
     <v-card dark>
        <v-card-title>
       Today's Price
+      <v-btn @click="getData" fab title="Refresh">
+        <v-icon  class="blue--text" >mdi-refresh</v-icon>
+      </v-btn>
+      
       <v-spacer></v-spacer>
       <v-text-field
         v-model="searchKey"
@@ -39,8 +43,7 @@
 
 <script>
   const axios = require('axios');
-
-
+  
   export default {
     name: 'Home',
     data: () => ({
@@ -65,8 +68,13 @@
         ],
     
     }),
-    created(){
-      this.loaders.todaysPrice = true
+    mounted(){
+      this.getData()
+    },
+    methods:{
+
+      getData(){
+        this.loaders.todaysPrice = true
       axios.get('https://g1y4zxy8vf.execute-api.us-east-2.amazonaws.com/dev/todaysPrice')
         .then(({data})=>{
           console.log(data.prices)
@@ -77,8 +85,8 @@
           this.loaders.todaysPrice = false
           console.log(err)
         })
-    },
-    methods:{
+
+      },
       addToWatchlist(company){
         this.$store.commit('addToWatchlist',company)
       },
@@ -88,7 +96,8 @@
       getColor(difference){
          
         if (difference < 0) return 'red'
-        else return 'green'
+        else if(difference > 0) return 'green'
+        else return 'orange'
       }
 
     }
