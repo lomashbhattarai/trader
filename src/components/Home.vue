@@ -20,7 +20,7 @@
         :headers="headers"
         :search="searchKey"
         :items="todaysPrice"
-        :items-per-page="20"
+        :items-per-page="100"
         class="elevation-1"
         @click:row="handleRowClick"
       >
@@ -75,7 +75,7 @@
 
       getData(){
         this.loaders.todaysPrice = true
-      axios.get('https://g1y4zxy8vf.execute-api.us-east-2.amazonaws.com/dev/todaysPrice')
+      axios.get('https://g1y4zxy8vf.execute-api.us-east-2.amazonaws.com/dev/getTodaysPrice')
         .then(({data})=>{
           console.log(data.prices)
           this.loaders.todaysPrice = false

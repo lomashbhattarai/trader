@@ -16,7 +16,7 @@
             width="40"
           />
           </router-link>
-          <h3> Trader </h3>
+          <h3> Stock Nepal </h3>
         
       </div>
 
