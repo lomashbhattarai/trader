@@ -3,10 +3,6 @@
     <v-card dark>
        <v-card-title>
       Today's Price
-      <v-btn @click="getData" fab title="Refresh">
-        <v-icon  class="blue--text" >mdi-refresh</v-icon>
-      </v-btn>
-      
       <v-spacer></v-spacer>
       <v-text-field
         v-model="searchKey"
@@ -16,6 +12,13 @@
         hide-details
       ></v-text-field>
     </v-card-title>
+      <v-card-subtitle v-if="todaysPrice.length">
+      As of {{ todaysPrice[0].today.replace(/-/g,' ') }}
+      <v-btn text icon @click="getData" color="green" title="Refresh">
+        <v-icon>mdi-cached</v-icon>
+      </v-btn>
+    </v-card-subtitle>
+
       <v-data-table dense dark :loading="loaders.todaysPrice"
         :headers="headers"
         :search="searchKey"
@@ -103,3 +106,16 @@
     }
   }
 </script>
+
+<style>
+.v-data-table .v-data-table__mobile-row {
+    height: initial;
+    min-height: 23px;
+}
+
+.v-data-table__mobile-row__header {
+    font-weight: 450;
+}
+
+
+</style>
