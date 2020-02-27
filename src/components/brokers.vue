@@ -1,7 +1,14 @@
 <template>
   <v-container>
+    <v-text-field
+        v-model="searchKey"
+        append-icon="mdi-magnify"
+        label="Search by Name, Address or Code"
+        single-line
+        hide-details
+      ></v-text-field>
     <v-row v-if="!loaders.brokers">
-      <v-col v-for="(company,index) in brokers"
+      <v-col v-for="(company,index) in fileredBrokers"
       :key="index" cols="12" md="4">
           <v-card
       
@@ -62,10 +69,27 @@
 
     data: () => ({
      brokers:[],
+     searchKey:'',
      loaders:{
        brokers: false
      },
     }),
+    computed:{
+      fileredBrokers(){
+        if(this.brokers.length){
+          console.log("yes")
+          return this.brokers.filter((broker) => {
+            console.log()
+            return broker.name.toLowerCase().includes(this.searchKey.toLowerCase())
+              || broker.code.toLowerCase().includes(this.searchKey.toLowerCase())
+              || broker.address.toLowerCase().includes(this.searchKey.toLowerCase())
+        })
+        } else {
+          return []
+        }
+        
+      }
+    },
     created(){
       this.loaders.brokers = true
       axios.get('https://g1y4zxy8vf.execute-api.us-east-2.amazonaws.com/dev/getBrokers')
