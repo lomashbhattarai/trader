@@ -19,6 +19,29 @@
       </v-btn>
     </v-card-subtitle>
 
+
+    <v-chip
+      class="ma-2"
+      text-color="green"
+    >
+   
+        {{ dataSummary.positive }}    Positive
+    </v-chip>
+
+    <v-chip
+      class="ma-2"
+      text-color="red"
+    >
+       {{ dataSummary.negative }} Negative
+    </v-chip>
+
+    <v-chip
+      class="ma-2"
+      text-color="orange"
+    >
+      {{ dataSummary.neutral }} Neutral
+    </v-chip>
+
       <v-data-table dense dark :loading="loaders.todaysPrice"
         :headers="headers"
         :search="searchKey"
@@ -73,6 +96,32 @@
     }),
     mounted(){
       this.getData()
+    },
+
+    computed:{
+      dataSummary(){
+        let dataSummary = {
+          positive: 0,
+          negative: 0,
+          neutral: 0
+        }
+
+        if(this.todaysPrice.length){
+          this.todaysPrice.map(company => {
+            if(company.difference > 0){
+              dataSummary['positive']++
+            } 
+            else if (company.difference < 0) {
+              dataSummary['negative']++
+            } 
+            else {
+              dataSummary['neutral']++
+            }
+          })
+        }
+
+        return dataSummary
+      }
     },
     methods:{
 

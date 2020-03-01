@@ -37,12 +37,10 @@
         </v-btn>
       </router-link>
             <v-btn
-        href="https://github.com/lomashbhattarai/trader"
-        target="_blank"
         text
       >
-        <span class="mr-2">Beta Release Notes</span>
-        <v-icon>mdi-open-in-new</v-icon>
+        <span class="mr-2">Login</span>
+        <v-icon>mdi-account</v-icon>
       </v-btn>
       
     </v-app-bar>
