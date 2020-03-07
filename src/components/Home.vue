@@ -46,12 +46,15 @@
         :headers="headers"
         :search="searchKey"
         :items="todaysPrice"
-        :items-per-page="100"
+        :items-per-page="200"
         class="elevation-1"
         @click:row="handleRowClick"
       >
         <template v-slot:item.name="{ item }">
           <span :class="getColor(item.difference)+'--text'">{{ item.name }}</span>
+        </template>
+        <template v-slot:item.symbol="{ item }">
+          <span :class="getColor(item.difference)+'--text'">{{ item.symbol }}</span>
         </template>
         <template v-slot:item.difference="{ item }">
           <span :class="getColor(item.difference)+'--text'">{{ item.difference }}</span>
@@ -86,11 +89,14 @@
             value: 'name',
           },
           { text: 'Symbol', value: 'symbol' },
+          { text: 'Traded Shares', value: 'tradedShares' },
           { text: 'Max Price', value: 'maxPrice' },
           { text: 'Min Price', value: 'minPrice' },
           { text: 'Closing Price', value: 'closingPrice' },
-          { text: 'Traded Shares', value: 'tradedShares' },
+          { text: 'Prev Closing', value: 'prevClosingPrice' },
           { text: 'Difference', value: 'difference' },
+          
+
         ],
     
     }),
