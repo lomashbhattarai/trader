@@ -6,7 +6,7 @@
             :maxPriceArray="maxPriceArray"
             :minPriceArray="minPriceArray" 
             :days="dayArray"  
-            :height="125" 
+             
         />
         <!-- supports and resistance -->
     
@@ -33,7 +33,7 @@ export default {
         },
         dayArray(){
             return this.historyData.map((price)=>{
-                return price.today
+                return price.today.split('-').slice(0,3).join('-')
             })
 
         },

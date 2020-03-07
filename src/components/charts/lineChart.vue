@@ -20,7 +20,7 @@
 						text: `Price History(${this.symbol})`
 					},
 					responsive: true, 
-					maintainAspectRatio: true
+					maintainAspectRatio: false
 				},
 				formatting:{
 					fill:false,
