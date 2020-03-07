@@ -21,7 +21,7 @@ const routes = [
         component: Watchlist 
     },
     { 
-        path: '/:id/singlePage', 
+        path: '/:symbol/singlePage', 
         name:'singlePage',
         component: SinglePage 
     },

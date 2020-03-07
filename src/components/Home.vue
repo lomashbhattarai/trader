@@ -41,6 +41,7 @@
     >
       {{ dataSummary.neutral }} Neutral
     </v-chip>
+    
 
       <v-data-table dense dark :loading="loaders.todaysPrice"
         :headers="headers"
@@ -58,6 +59,9 @@
         </template>
         <template v-slot:item.difference="{ item }">
           <span :class="getColor(item.difference)+'--text'">{{ item.difference }}</span>
+        </template>
+        <template v-slot:item.percentDiff="{ item }">
+          <span :class="getColor(item.difference)+'--text'">{{ item.percentDiff }} </span>
         </template>
       
       
@@ -95,6 +99,8 @@
           { text: 'Closing Price', value: 'closingPrice' },
           { text: 'Prev Closing', value: 'prevClosingPrice' },
           { text: 'Difference', value: 'difference' },
+          { text: '% Diff', value: 'percentDiff' },
+
           
 
         ],
@@ -135,8 +141,11 @@
         this.loaders.todaysPrice = true
       axios.get('https://g1y4zxy8vf.execute-api.us-east-2.amazonaws.com/dev/getTodaysPrice')
         .then(({data})=>{
-          console.log(data.prices)
           this.loaders.todaysPrice = false
+          console.log("Xxx")
+          data.prices.map((item,index) => {
+            data.prices[index].percentDiff = this.calcPercentDiff(item)
+          })
           this.todaysPrice = data.prices
         })
         .catch((err) => {
@@ -149,14 +158,19 @@
         this.$store.commit('addToWatchlist',company)
       },
       handleRowClick(value){
-        this.$router.push({name:'singlePage',params:{id:value.sn}})
+        this.$router.push({name:'singlePage',params:{symbol:value.symbol}})
       },
       getColor(difference){
          
         if (difference < 0) return 'red'
         else if(difference > 0) return 'green'
         else return 'orange'
+      },
+      calcPercentDiff(item){
+        let num = item.difference*100/item.prevClosingPrice 
+        return +num.toFixed(2)
       }
+      
 
     }
   }
