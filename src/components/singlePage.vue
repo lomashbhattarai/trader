@@ -8,8 +8,10 @@
             :days="dayArray"  
              
         />
+        <customBarChart class="mt-5"
+            :days="dayArray"
+            :volumeArray="volumeArray" />
         <!-- supports and resistance -->
-    
     </v-card>
 </v-container>   
     
@@ -19,12 +21,14 @@
 <script>
 const axios = require('axios');
 
-import lineChart from './charts/lineChart'
+import lineChart from './charts/lineChart';
+import customBarChart from './customBarChart'
 export default {
     data(){
         return {
             historyData:[],
-            days:['January', 'February', 'March', 'April', 'May', 'June', 'July']
+            days:['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+            
         }
     },
     computed:{
@@ -52,6 +56,11 @@ export default {
                 return price.minPrice
             })
         },
+        volumeArray(){
+            return this.historyData.map((price)=>{
+                return price.tradedShares
+            })
+        }
     },
     methods:{
         getHistroyFromSymbol(){
@@ -66,7 +75,8 @@ export default {
         this.getHistroyFromSymbol()
     },
     components:{
-        lineChart
+        lineChart,
+        customBarChart
     }
 
     

@@ -13,7 +13,7 @@
 			return {
 				options:{
 					legend: {
-						position:'bottom'
+						position:'top'
 					},
 					title:{
 						display: true,
