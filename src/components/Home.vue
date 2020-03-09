@@ -79,7 +79,8 @@
   
   export default {
     name: 'Home',
-    data: () => ({
+    data() {
+      return {
       searchKey:'',
      todaysPrice:[],
      loaders:{
@@ -105,9 +106,13 @@
 
         ],
     
-    }),
-    mounted(){
-      this.getData()
+    }
+    },
+    created(){
+      if(!this.todaysPrice.length){
+        this.getData()
+      }
+      
     },
 
     computed:{

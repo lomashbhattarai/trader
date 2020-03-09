@@ -1,6 +1,7 @@
 <template>
 <v-container class="mt-5">
-    <v-card>
+    <router-link :to="{name:'home'}"><v-btn>Back</v-btn></router-link>
+    <v-card class="mt-5">
         <lineChart :symbol="symbol" 
             :closingPriceArray="closingPriceArray"
             :maxPriceArray="maxPriceArray"
