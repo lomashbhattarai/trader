@@ -9,19 +9,8 @@
 			days: Array,
 			symbol: String
 		},
-		data(){
-			return {
-				options:{
-					legend: {
-						position:'top'
-					},
-					title:{
-						display: true,
-						text: `Price History(${this.symbol})`
-					},
-					responsive: true, 
-					maintainAspectRatio: false
-				},
+	data(){
+		return {
 				formatting:{
 					fill:false,
 					lineTension: 0.3,
@@ -47,6 +36,19 @@
 			}
 		},
 		computed:{
+				options(){
+					return {
+					legend: {
+						position:'top'
+					},
+					title:{
+						display: true,
+						text: `Price History(${this.symbol})`
+					},
+					responsive: true, 
+					maintainAspectRatio: false
+				}
+				},
 			chartData() {
 				return {
 					//labels: ['x','y','z'],

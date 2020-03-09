@@ -72,6 +72,14 @@ export default {
 
         }
     },
+    watch:{
+        symbol(newValue,oldValue){
+            if(oldValue != newValue) {
+                this.getHistroyFromSymbol()
+            }
+                
+        }
+    },
     mounted(){
         this.getHistroyFromSymbol()
     },
