@@ -65,7 +65,7 @@
       </v-navigation-drawer>
 
     <v-content>
-      <keep-alive>
+      <keep-alive exclude="singlePage">
         <router-view></router-view>
       </keep-alive>
     </v-content>

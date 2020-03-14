@@ -36,6 +36,7 @@ const axios = require('axios');
 import lineChart from './charts/lineChart';
 import customBarChart from './customBarChart'
 export default {
+    name:'singlePage',
     data(){
         return {
             historyData:[],
@@ -46,7 +47,10 @@ export default {
                     symbol: "ADBL"
                 }
             ],
-            selectedCompany:''
+            selectedCompany:{
+                name: '',
+                symbol: this.$route.params.symbol
+            }
             
         }
     },
@@ -109,13 +113,13 @@ export default {
     watch:{
         symbol(newValue,oldValue){
             if(oldValue != newValue) {
+                
                 this.getHistroyFromSymbol()
             }
                 
         }
     },
     mounted(){
-        this.selectedCompany =''
         this.getHistroyFromSymbol()
         this.getCompanyList()
     },
