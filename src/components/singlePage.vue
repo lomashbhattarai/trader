@@ -2,11 +2,15 @@
 <v-container class="mt-5">
     <router-link :to="{name:'home'}"><v-btn>Back</v-btn></router-link>
     <v-select v-model="selectedCompany" 
-        chips
         hint="Pick a company to see its charts"
         persistent-hint
-        :items="companiesSymbolArray" @change="changeRoute()">
-        
+        :items="companiesSortedArray" @change="changeRoute()">
+         <template slot="selection" slot-scope="data">
+             {{ data.item.symbol }} - {{ data.item.name }}
+        </template>
+        <template slot="item" slot-scope="data">
+            {{ data.item.symbol }} - {{ data.item.name }}
+        </template>
     </v-select>
     <v-card class="mt-5">
         <lineChart :symbol="symbol" 
@@ -76,9 +80,9 @@ export default {
                 return price.tradedShares
             })
         },
-        companiesSymbolArray(){
-            return this.companies.map((company)=>{
-                return company.symbol
+        companiesSortedArray(){
+            return this.companies.slice().sort((company1,company2)=>{
+                return company1.name > company2.name
             })
         }
     },
@@ -99,7 +103,7 @@ export default {
 
         },
         changeRoute(){
-            this.$router.push({name:'singlePage',params:{symbol:this.selectedCompany}})
+            this.$router.push({name:'singlePage',params:{symbol:this.selectedCompany.symbol}})
         }
     },
     watch:{
@@ -111,6 +115,7 @@ export default {
         }
     },
     mounted(){
+        this.selectedCompany =''
         this.getHistroyFromSymbol()
         this.getCompanyList()
     },
