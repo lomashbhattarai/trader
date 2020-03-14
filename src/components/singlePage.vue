@@ -1,6 +1,13 @@
 <template>
 <v-container class="mt-5">
     <router-link :to="{name:'home'}"><v-btn>Back</v-btn></router-link>
+    <v-select v-model="selectedCompany" 
+        chips
+        hint="Pick a company to see its charts"
+        persistent-hint
+        :items="companiesSymbolArray" @change="changeRoute()">
+        
+    </v-select>
     <v-card class="mt-5">
         <lineChart :symbol="symbol" 
             :closingPriceArray="closingPriceArray"
@@ -29,6 +36,13 @@ export default {
         return {
             historyData:[],
             days:['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+            companies:[
+                {
+                    name: "agriculture development bank",
+                    symbol: "ADBL"
+                }
+            ],
+            selectedCompany:''
             
         }
     },
@@ -61,6 +75,11 @@ export default {
             return this.historyData.map((price)=>{
                 return price.tradedShares
             })
+        },
+        companiesSymbolArray(){
+            return this.companies.map((company)=>{
+                return company.symbol
+            })
         }
     },
     methods:{
@@ -70,6 +89,17 @@ export default {
                     this.historyData = data.history
                 })
 
+        },
+        getCompanyList(){
+            axios.get(' https://g1y4zxy8vf.execute-api.us-east-2.amazonaws.com/dev/getCompanyFromDb')
+                .then(({data})=> {
+                    this.companies = data.company
+
+                })
+
+        },
+        changeRoute(){
+            this.$router.push({name:'singlePage',params:{symbol:this.selectedCompany}})
         }
     },
     watch:{
@@ -82,6 +112,7 @@ export default {
     },
     mounted(){
         this.getHistroyFromSymbol()
+        this.getCompanyList()
     },
     components:{
         lineChart,

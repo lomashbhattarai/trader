@@ -86,16 +86,28 @@ export default {
 
   data: () => ({
       drawer: false,
-      items:[{
-        title: 'Brokers',
-        routeName:'brokers',
-        icon:'  '
+      items:[
+      {
+        title: 'Your Portfolio',
+        routeName:'watchlist',
+        icon:''
       },
       {
         title: 'Watch list',
         routeName:'watchlist',
         icon:''
-      }
+      },
+
+      {
+        title: 'Paper trading',
+        routeName:'watchlist',
+        icon:''
+      },
+      {
+        title: 'Brokers',
+        routeName:'brokers',
+        icon:'  '
+      },
       
       ]
   }),
