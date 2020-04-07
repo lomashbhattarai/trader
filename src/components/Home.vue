@@ -147,7 +147,6 @@
       axios.get('https://g1y4zxy8vf.execute-api.us-east-2.amazonaws.com/dev/getTodaysPrice')
         .then(({data})=>{
           this.loaders.todaysPrice = false
-          console.log("Xxx")
           data.prices.map((item,index) => {
             data.prices[index].percentDiff = this.calcPercentDiff(item)
           })

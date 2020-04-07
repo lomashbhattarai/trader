@@ -13,11 +13,14 @@
       </div>
       <v-spacer></v-spacer>
             <v-btn
-        text
-      >
-        <span class="mr-2">Login</span>
-        <v-icon>mdi-account</v-icon>
-      </v-btn> 
+              v-if="!user" 
+              @click="goToLogin"
+            text
+            >
+            <span class="mr-2">Login</span>
+            <v-icon>mdi-account</v-icon>
+          </v-btn> 
+          <v-btn text v-else> Logout</v-btn>
     </v-app-bar>
     <v-navigation-drawer
         v-model="drawer"
@@ -37,8 +40,8 @@
             </v-list-item-avatar>
 
             <v-list-item-content>
-              <v-list-item-title>Name</v-list-item-title>
-              <v-list-item-subtitle>@username</v-list-item-subtitle>
+              <v-list-item-title>{{ user ? user.username : ''}}</v-list-item-title>
+              <v-list-item-subtitle>@{{ user ? user.username : ''}}</v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
 
@@ -73,6 +76,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 export default {
   name: 'App',
 
@@ -84,6 +88,11 @@ export default {
       drawer: false,
       items:[
       {
+        title: "Today's Price",
+        routeName:'home',
+        icon:''
+      },
+      {
         title: 'Your Portfolio',
         routeName:'watchlist',
         icon:''
@@ -93,11 +102,10 @@ export default {
         routeName:'watchlist',
         icon:''
       },
-
       {
-        title: 'Paper trading',
-        routeName:'watchlist',
-        icon:''
+        title: 'Chat groups',
+        routeName:'brokers',
+        icon:'  '
       },
       {
         title: 'Brokers',
@@ -107,6 +115,17 @@ export default {
       
       ]
   }),
+  computed:{
+    ...mapState(['user']),
+  },
+  methods:{
+    goToLogin(){
+      let client_id = '6145srbi3mf6bhqejrkr1p9r8a'
+      let redirect_uri= 'https://lomashbhattarai.github.io/stocknepal/home'
+      //redirect_uri = 'http://localhost:8080'
+      window.location.href = `https://stockfly.auth.us-east-2.amazoncognito.com/login?response_type=token&client_id=${client_id}&redirect_uri=${redirect_uri}`
+    }
+  },
 };
 </script>
 
