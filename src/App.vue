@@ -94,7 +94,7 @@ export default {
       },
       {
         title: 'Your Portfolio',
-        routeName:'watchlist',
+        routeName:'portfolio',
         icon:''
       },
       {
