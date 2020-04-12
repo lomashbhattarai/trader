@@ -34,7 +34,11 @@ new Vue({
           Authorization: `Bearer ${assess_token}` 
         }
       }).then(({data})=> {
-        this.$store.commit('setUserDetails',data)
+        this.$store.commit('setUser',data)
+        console.log(data.email)
+        if(data.email){
+          this.$store.dispatch('getUserDetails',{email: data.email})
+        }
       })
   }
     
