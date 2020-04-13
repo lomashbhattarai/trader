@@ -3,9 +3,18 @@
         <v-container>
             <v-row>
                 <v-col>
-                    <PieChart :chartdata="chartdata" :options="options" />
+                    <v-data-table dense 
+                        :headers="headers"
+                        :items="userDetails.portfolio"
+                        :items-per-page="10"
+                        class="elevation-1"
+                    > </v-data-table>
                 </v-col>
                 <v-col>
+                    <PieChart :chartdata="chartdata" :options="options" />
+                </v-col>
+            </v-row>
+            <v-col>
                         <v-list>
                             <v-list-group>
                                   <template v-slot:activator>
@@ -62,8 +71,7 @@
                             </v-list-group>
                         </v-list>
                 </v-col>
-        
-            </v-row>
+               
         
         </v-container>
     </div>
@@ -79,6 +87,13 @@ export default {
     },
     data(){
         return {
+            headers: [
+          { text: 'Symbol', value: 'symbol' },
+          { text: 'Cost Price', value: 'costPrice' },
+          { text: 'Num of Shares', value: 'numOfShares' },
+          { text: 'Current Value', value: 'difference' },
+          { text: 'Gain/loss', value: 'percentDiff' },
+        ],
             newEntry:{
                 symbol:'',
                 numOfShares:'',

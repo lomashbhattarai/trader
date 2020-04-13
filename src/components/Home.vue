@@ -66,11 +66,6 @@
       
       
       </v-data-table>
-        <v-card-actions>
-        <v-btn text icon color="pink" @click="addToWatchlist(company)">
-                <v-icon title="Add to watch list">mdi-heart-outline</v-icon>
-          </v-btn>
-        </v-card-actions>
     </v-card>
 </template>
 
