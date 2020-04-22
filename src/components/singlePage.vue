@@ -1,6 +1,6 @@
 <template>
 <v-container class="mt-5">
-    <router-link :to="{name:'home'}"><v-btn>Back</v-btn></router-link>
+     <v-btn @click="$router.go(-1)">Back</v-btn>
     
     <v-row>
         <v-col cols="12" md="4">
@@ -30,7 +30,7 @@
 
     <v-card-actions>
       <v-btn text color="blue">Add to Portfolio</v-btn>
-      <v-btn text color="pink" @click="addToWatchlist(company)">
+      <v-btn text color="pink" @click="addToWatchlist(selectedCompany)">
         Add to Watchlist
         <!-- <v-icon title="Add to watch list">mdi-heart-outline</v-icon> -->
       </v-btn>
@@ -61,6 +61,7 @@ const axios = require('axios');
 
 import lineChart from './charts/lineChart';
 import customBarChart from './customBarChart'
+import { mapState } from 'vuex';
 export default {
     name:'singlePage',
     data(){
@@ -81,6 +82,7 @@ export default {
         }
     },
     computed:{
+        ...mapState(['userDetails','watchlist']),
         symbol(){
             return this.$route.params.symbol
         },
@@ -134,7 +136,23 @@ export default {
         },
         changeRoute(){
             this.$router.push({name:'singlePage',params:{symbol:this.selectedCompany.symbol}})
+        },
+        addToWatchlist(selectedCompany){
+            if(this.userDetails){
+                let formData = {
+                "email":this.userDetails.email,
+                "symbol":selectedCompany.symbol
+            }
+            axios.post(' https://r7ytk8m6dj.execute-api.us-east-2.amazonaws.com/dev/api/watchlist/create',formData).then(()=>{
+                        this.$store.dispatch('getUserDetails',{email: this.userDetails.email})
+                    })
+            }
+
+            else {
+                this.$store.commit('addToWatchlist',[...this.watchlist,{symbol:selectedCompany.symbol}])
+            }
         }
+
     },
     watch:{
         symbol(newValue,oldValue){

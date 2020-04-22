@@ -112,6 +112,11 @@ export default {
         routeName:'brokers',
         icon:'  '
       },
+      {
+        title: 'News',
+        routeName:'brokers',
+        icon:'  '
+      }
       
       ]
   }),

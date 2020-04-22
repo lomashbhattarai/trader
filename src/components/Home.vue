@@ -70,14 +70,14 @@
 </template>
 
 <script>
-  const axios = require('axios');
-  
+  import { mapState, mapActions } from 'vuex'
+
   export default {
     name: 'Home',
     data() {
       return {
       searchKey:'',
-     todaysPrice:[],
+     //todaysPrice:[],
      loaders:{
        todaysPrice: false
      },
@@ -105,12 +105,16 @@
     },
     created(){
       if(!this.todaysPrice.length){
-        this.getData()
+        this.loaders.todaysPrice = true
+        this.getTodaysPrice().then(()=>{
+          this.loaders.todaysPrice = false
+        })
       }
-      
     },
 
     computed:{
+      ...mapState(['todaysPrice']),
+
       dataSummary(){
         let dataSummary = {
           positive: 0,
@@ -136,22 +140,13 @@
       }
     },
     methods:{
-
+      ...mapActions(['getTodaysPrice']),
       getData(){
         this.loaders.todaysPrice = true
-      axios.get('https://g1y4zxy8vf.execute-api.us-east-2.amazonaws.com/dev/getTodaysPrice')
-        .then(({data})=>{
+        this.getTodaysPrice().then(()=>{
           this.loaders.todaysPrice = false
-          data.prices.map((item,index) => {
-            data.prices[index].percentDiff = this.calcPercentDiff(item)
-          })
-          this.todaysPrice = data.prices
         })
-        .catch((err) => {
-          this.loaders.todaysPrice = false
-          console.log(err)
-        })
-
+       
       },
       addToWatchlist(company){
         this.$store.commit('addToWatchlist',company)

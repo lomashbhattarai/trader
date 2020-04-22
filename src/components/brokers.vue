@@ -15,6 +15,7 @@
       class="mx-auto"
       max-width="344"
       outlined
+      shaped
     >
     
       <v-list-item three-line>
