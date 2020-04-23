@@ -40,8 +40,8 @@
             </v-list-item-avatar>
 
             <v-list-item-content>
-              <v-list-item-title>{{ user ? user.username : ''}}</v-list-item-title>
-              <v-list-item-subtitle>@{{ user ? user.username : ''}}</v-list-item-subtitle>
+              <v-list-item-title>@{{ userDetails ? userDetails.userName : ''}}</v-list-item-title>
+              <v-list-item-subtitle>{{ userDetails ? userDetails.email : ''}}</v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
 
@@ -100,6 +100,11 @@ export default {
       {
         title: 'Watch list',
         routeName:'watchlist',
+        icon:'mdi-heart'
+      },
+      {
+        title: "Today's Summary",
+        routeName:'watchlist',
         icon:''
       },
       {
@@ -121,7 +126,7 @@ export default {
       ]
   }),
   computed:{
-    ...mapState(['user']),
+    ...mapState(['user','userDetails']),
   },
   methods:{
     goToLogin(){

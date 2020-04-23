@@ -7,7 +7,7 @@
             <v-select v-model="selectedCompany" 
                 hint="Pick a company to see its charts"
                 persistent-hint
-                :items="companiesSortedArray" @change="changeRoute()">
+                :items="companiesSortedArray">
                 <template slot="selection" slot-scope="data">
                     {{ data.item.symbol }} - {{ data.item.name }}
                 </template>
@@ -20,26 +20,27 @@
     class="mx-auto mt-5"
     max-width="344"
     outlined
+    shaped
   >
     <v-list-item three-line>
       <v-list-item-content>
-        <v-list-item-title class="headline mb-1">{{ selectedCompany.symbol }}</v-list-item-title>
+                <v-list-item-title>{{ selectedCompany.symbol }}
+                    <span>
+                <v-icon v-if="!isaddedToWatchList" @click="addToWatchlist(selectedCompany)" title="Add to watch list">mdi-heart-outline</v-icon> 
+                <v-icon color="pink" v-else title="on your  watch list">mdi-heart</v-icon>  
+                </span>
+                </v-list-item-title>
         <v-list-item-subtitle> {{ selectedCompany.name }}</v-list-item-subtitle>
+       
       </v-list-item-content>
     </v-list-item>
-
-    <v-card-actions>
-      <v-btn text color="blue">Add to Portfolio</v-btn>
-      <v-btn text color="pink" @click="addToWatchlist(selectedCompany)">
-        Add to Watchlist
-        <!-- <v-icon title="Add to watch list">mdi-heart-outline</v-icon> -->
-      </v-btn>
-    </v-card-actions>
+          <v-btn text color="blue">Add to Portfolio</v-btn>  
+    
   </v-card>
     </v-col>
         <v-col cols="12" md="8">
             <v-card class="mt-5">
-                <lineChart :symbol="symbol" 
+                <lineChart :symbol="selectedCompany.symbol" 
                     :closingPriceArray="closingPriceArray"
                     :maxPriceArray="maxPriceArray"
                     :minPriceArray="minPriceArray" 
@@ -77,18 +78,21 @@ export default {
             selectedCompany:{
                 name: '',
                 symbol: this.$route.params.symbol
-            }
+            },
+            symbol:this.$route.params.symbol
             
         }
     },
     computed:{
         ...mapState(['userDetails','watchlist']),
-        symbol(){
-            return this.$route.params.symbol
+        isaddedToWatchList(){
+            return this.watchlist.some((watchStock)=>{
+                return watchStock.symbol == this.selectedCompany.symbol
+            })
         },
         dayArray(){
             return this.historyData.map((price)=>{
-                return price.today.split('-').slice(0,3).join('-')
+                return price.today.split('-').slice(1,3).join('-')
             })
 
         },
@@ -120,17 +124,16 @@ export default {
     },
     methods:{
         getHistroyFromSymbol(){
-            axios.get(`https://g1y4zxy8vf.execute-api.us-east-2.amazonaws.com/dev/getHistoryBySymbol/${this.symbol}`)
+            axios.get(`https://g1y4zxy8vf.execute-api.us-east-2.amazonaws.com/dev/getHistoryBySymbol/${this.selectedCompany.symbol}`)
                 .then(({data})=>{
                     this.historyData = data.history
                 })
 
         },
         getCompanyList(){
-            axios.get(' https://g1y4zxy8vf.execute-api.us-east-2.amazonaws.com/dev/getCompanyFromDb')
+            return axios.get(' https://g1y4zxy8vf.execute-api.us-east-2.amazonaws.com/dev/getCompanyFromDb')
                 .then(({data})=> {
                     this.companies = data.company
-
                 })
 
         },
@@ -155,9 +158,10 @@ export default {
 
     },
     watch:{
-        symbol(newValue,oldValue){
+        "selectedCompany.symbol"(newValue,oldValue){
             if(oldValue != newValue) {
-                
+                this.changeRoute()
+                //this.symbol = this.selectedCompany.symbol
                 this.getHistroyFromSymbol()
             }
                 
@@ -165,7 +169,11 @@ export default {
     },
     mounted(){
         this.getHistroyFromSymbol()
-        this.getCompanyList()
+        this.getCompanyList().then(()=>{
+            this.selectedCompany = this.companies.find((company)=>{
+                return company.symbol == this.selectedCompany.symbol
+            })
+        })
     },
     components:{
         lineChart,

@@ -60,9 +60,13 @@
                                 <v-text-field v-model="newEntry.costPrice" label="Cost Price"></v-text-field>
                             </v-col>
                         </v-row>
+                        <v-list-group>
+                            <template v-slot:activator>
+                        <v-card-title>optional</v-card-title>
+                                  </template>
                         <v-date-picker v-model="newEntry.date" no-title @input="menu1 = false"></v-date-picker>
-
                         <v-file-input multiple label="Receipt of Purchase"></v-file-input>
+                        </v-list-group>
                          <v-btn
                             color="success"
                             class="mr-4"
