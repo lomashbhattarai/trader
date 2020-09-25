@@ -26,7 +26,7 @@ new Vue({
       let [id_token,assess_token] =tokens.split('&access_token=')
       assess_token = assess_token.split('&expires_in=')[0]
       this.$store.commit('addToken',{id_token,assess_token})
-      
+      //need to chage
       axios.get('https://stockfly.auth.us-east-2.amazoncognito.com/oauth2/userInfo', 
       {
         headers: 

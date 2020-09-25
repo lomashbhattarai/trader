@@ -124,14 +124,14 @@ export default {
     },
     methods:{
         getHistroyFromSymbol(){
-            axios.get(`https://g1y4zxy8vf.execute-api.us-east-2.amazonaws.com/dev/getHistoryBySymbol/${this.selectedCompany.symbol}`)
+            axios.get(`https://2e39214vbk.execute-api.us-east-2.amazonaws.com/dev/getHistoryBySymbol/${this.selectedCompany.symbol}`)
                 .then(({data})=>{
                     this.historyData = data.history
                 })
 
         },
         getCompanyList(){
-            return axios.get(' https://g1y4zxy8vf.execute-api.us-east-2.amazonaws.com/dev/getCompanyFromDb')
+            return axios.get('https://2e39214vbk.execute-api.us-east-2.amazonaws.com/dev/getCompanyFromDb')
                 .then(({data})=> {
                     this.companies = data.company
                 })
@@ -146,7 +146,8 @@ export default {
                 "email":this.userDetails.email,
                 "symbol":selectedCompany.symbol
             }
-            axios.post(' https://r7ytk8m6dj.execute-api.us-east-2.amazonaws.com/dev/api/watchlist/create',formData).then(()=>{
+            //need to change url
+            axios.post('https://r7ytk8m6dj.execute-api.us-east-2.amazonaws.com/dev/api/watchlist/create',formData).then(()=>{
                         this.$store.dispatch('getUserDetails',{email: this.userDetails.email})
                     })
             }

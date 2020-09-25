@@ -220,7 +220,7 @@ export default {
                         "costPrice":this.newEntry.costPrice,
                         "numOfShares":this.newEntry.numOfShares
                     } 
-                    axios.post(' https://r7ytk8m6dj.execute-api.us-east-2.amazonaws.com/dev/api/portfolio/create',formData).then(()=>{
+                    axios.post('https://2e39214vbk.execute-api.us-east-2.amazonaws.com/dev/api/portfolio/create',formData).then(()=>{
                         this.$store.dispatch('getUserDetails',{email: this.userDetails.email})
                         this.newEntry = {
                             symbol:'',

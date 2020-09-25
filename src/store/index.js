@@ -40,12 +40,13 @@ export default new Vuex.Store({
   },
   actions: {
     getCompanyList({commit}) {
-      axios.get(' https://g1y4zxy8vf.execute-api.us-east-2.amazonaws.com/dev/getCompanyFromDb')
+      axios.get('https://2e39214vbk.execute-api.us-east-2.amazonaws.com/dev/getCompanyFromDb')
                 .then(({data})=> {
                   commit('setCompanies',data.company)
                 })
     },
     getUserDetails({commit,state},{email}){
+      //need to change the url
       axios.get(' https://r7ytk8m6dj.execute-api.us-east-2.amazonaws.com/dev/api/portfolio/get',{
         params: {
           email: email
@@ -64,7 +65,7 @@ export default new Vuex.Store({
       })
     },
     getTodaysPrice({commit}){
-      return axios.get('https://g1y4zxy8vf.execute-api.us-east-2.amazonaws.com/dev/getTodaysPrice')
+      return axios.get('https://2e39214vbk.execute-api.us-east-2.amazonaws.com/dev/getTodaysPrice')
         .then(({data})=>{
           data.prices.map((item,index) => {
             data.prices[index].percentDiff = calcPercentDiff(item)

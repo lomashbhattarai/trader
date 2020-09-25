@@ -93,7 +93,7 @@
     },
     created(){
       this.loaders.brokers = true
-      axios.get('https://g1y4zxy8vf.execute-api.us-east-2.amazonaws.com/dev/getBrokers')
+      axios.get('https://2e39214vbk.execute-api.us-east-2.amazonaws.com/dev/getBrokers')
         .then(({data})=>{
           console.log(data.prices)
           this.loaders.brokers = false

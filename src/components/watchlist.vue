@@ -143,6 +143,7 @@ const axios = require('axios');
                 "email":this.userDetails.email,
                 "id":company.watchListId
               }
+        // need to change url
         axios.post(' https://r7ytk8m6dj.execute-api.us-east-2.amazonaws.com/dev/api/watchlist/delete',formData).then(()=>{
                         this.$store.dispatch('getUserDetails',{email: this.userDetails.email})
                     })
